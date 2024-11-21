@@ -65,21 +65,20 @@ const App = () => {
     const note = notes.find(note => note.id === id)
     const changedNote = { ...note, important: !note.important}
 
-    noteService
-         .update(id, changedNote)
-         .then(updatedNote => {
-          let updatedNotes = notes.map(note => {
-            if (note.id === id) return updatedNote
-            else return note
-          })
+    noteService.update(id, changedNote)
+               .then(updatedNote => {
+                let updatedNotes = notes.map(note => {
+                  if (note.id === id) return updatedNote
+                  else return note
+                })
 
-          setNotes(updatedNotes)
-         })
-         .catch(() => {
-            setErrorMessage(`Note '${note.content}' was already removed from server`)
-            setTimeout(() => setErrorMessage(null), 5000)
-            setNotes(notes.filter(n => n.id !== id))
-        })
+                setNotes(updatedNotes) // should cause a re-render?
+              })
+              .catch(() => {
+                  setErrorMessage(`Note '${note.content}' was already removed from server`)
+                  setTimeout(() => setErrorMessage(null), 5000)
+                  setNotes(notes.filter(n => n.id !== id))
+              })
   }
 
   return (

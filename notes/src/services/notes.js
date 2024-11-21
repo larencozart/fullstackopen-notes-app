@@ -8,12 +8,21 @@ const getAll = () => {
 
 const create = newObj => {
   const request = axios.post(baseUrl, newObj)
-  return request.then(response => response.data)
+  return request.then(response => {
+    console.log(response.data);
+    return response.data
+  })
 }
 
 const update = (id, newObj) => {
-  const request = axios.put(`${baseUrl}/${id}`, newObj)
-  return request.then(response => response.data)
+  console.log("calling update function from notes.js service");
+  axios.put(`${baseUrl}/${id}`, newObj);
+  return Promise.resolve(newObj);
 }
+
+// const update = (id, newObject) => {
+//   const request = axios.put(`${baseUrl}/${id}`, newObject)
+//   return request.then(response => response.data)
+// }
 
 export default { getAll, create, update }
